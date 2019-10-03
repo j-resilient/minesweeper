@@ -20,4 +20,11 @@ class Tile
     def toggle_flag
         flagged = !flagged
     end
+
+    def to_s
+        return "F" if flagged
+        return "*" if !revealed
+        return "B" if bomb
+        # here's where we're going to want to display a number
+    end
 end
