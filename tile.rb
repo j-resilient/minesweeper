@@ -1,14 +1,15 @@
 class Tile
     attr_reader :revealed, :bomb, :flagged
+    attr_writer :bomb
 
     # for debugging
     def inspect
-        "Position: \n Bomb: #{bomb}\n Revealed: #{self.revealed?}\n Flagged: #{flagged}"
+        "Position:   Bomb: #{bomb}  Revealed: #{revealed}   Flagged: #{flagged}\n"
     end
 
-    def initialize(bomb)
+    def initialize
         @revealed = false
-        @bomb = bomb
+        @bomb = false
         @flagged = false
     end
 
