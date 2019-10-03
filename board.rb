@@ -34,15 +34,21 @@ class Board
 
     def initialize
         @grid = create_grid
-        print @grid
     end
 
     def run
-        print grid
+        render
+    end
+
+    def render
+        puts "  #{(0..8).to_a.join(" ")}"
+        grid.each_with_index do |row, row_idx|
+            print "#{row_idx} #{row.map { |tile| tile.to_s }.join(" ")}\n"
+        end
     end
 end
 
 if __FILE__ == $PROGRAM_NAME
     board = Board.new
-    # board.run
+    board.run
 end
