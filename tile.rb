@@ -1,5 +1,5 @@
 require_relative "board"
-require 'byebug'
+require 'colorize'
 
 class Tile
     attr_reader :revealed, :bomb, :flagged
@@ -26,16 +26,13 @@ class Tile
     end
 
     def to_s(position)
-        return "F" if flagged
-        return "B" if bomb
-        check_square(position)
+        return "F".colorize(:green) if flagged
         # return "*" if !revealed
-        # here's where we're going to want to display a number
+        return "B".colorize(:red) if bomb
+        check_square(position)
     end
 
     def check_square(position)
-        # not counting correctly
-        # debugger
         value = 0
         x = (position[0] - 1) >= 0 ? (position[0] - 1) : position[0]
 
@@ -51,7 +48,7 @@ class Tile
             x += 1
         end
 
-        value == 0 ? '_' : value
+        value == 0 ? '_' : value.to_s.colorize(:blue)
     end
 
     # pass board to Tile on initialize so you can find neighbors for
