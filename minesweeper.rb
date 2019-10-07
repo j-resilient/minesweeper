@@ -1,18 +1,17 @@
 require_relative 'board'
 
 class Minesweeper
-    attr_reader :board
+    attr_reader :board, :current_input
 
     def initialize
         @board = Board.new
+        @current_input = []
     end
 
     def run
         board.render
-        input = get_input
+        current_input = get_input
         print input
-        # check input for bomb
-        # if not, update board
     end
 
     def get_input
