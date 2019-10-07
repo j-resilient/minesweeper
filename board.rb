@@ -1,11 +1,17 @@
 require_relative 'tile'
+require 'byebug'
 
 class Board
     attr_reader :grid
 
+    def [](position)
+        x, y = position
+        grid[x][y]
+    end
+
     def empty_grid
         tiles = Array.new(9) do
-            Array.new(9) { Tile.new }
+            Array.new(9) { Tile.new(self) }
         end
     end
 
@@ -41,9 +47,11 @@ class Board
     end
 
     def render
+        # debugger
         puts "  #{(0..8).to_a.join(" ")}"
+        puts
         grid.each_with_index do |row, row_idx|
-            print "#{row_idx} #{row.map { |tile| tile.to_s }.join(" ")}\n"
+            print "#{row_idx}  #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
         end
     end
 end
