@@ -2,11 +2,20 @@ require_relative 'tile'
 require 'byebug'
 
 class Board
-    attr_reader :grid
+    attr_reader :grid, :bomb_positions
 
     def [](position)
         x, y = position
         grid[x][y]
+    end
+
+    def get_bomb_positions
+        positions = []
+        until positions.length == 10
+            x, y = rand(8), rand(8)
+            positions << [x,y] if !positions.include?([x,y])
+        end
+        positions
     end
 
     def empty_grid
@@ -17,21 +26,11 @@ class Board
 
     def create_grid
         tiles = empty_grid
-        positions = get_bombs_positions
-        set_bombs(tiles, positions)
+        set_bombs(tiles)
     end
 
-    def get_bombs_positions
-        pos = []
-        until pos.length == 10
-            x, y = rand(8), rand(8)
-            pos << [x,y] if !pos.include?([x,y])
-        end
-        pos
-    end
-
-    def set_bombs(tiles, positions)
-        positions.each do |pos|
+    def set_bombs(tiles)
+        bomb_positions.each do |pos|
             x,y = pos
             tiles[x][y].bomb = true
         end
@@ -39,6 +38,7 @@ class Board
     end
 
     def initialize
+        @bomb_positions = get_bomb_positions
         @grid = create_grid
     end
 
@@ -47,16 +47,13 @@ class Board
     end
 
     def render
-        # debugger
         puts "  #{(0..8).to_a.join(" ")}"
-        puts
         grid.each_with_index do |row, row_idx|
-            print "#{row_idx}  #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
+            print "#{row_idx} #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
         end
     end
-end
 
-if __FILE__ == $PROGRAM_NAME
-    board = Board.new
-    board.run
+    def game_over?
+        
+    end
 end

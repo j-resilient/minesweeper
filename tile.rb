@@ -27,12 +27,12 @@ class Tile
 
     def to_s(position)
         return "F".colorize(:green) if flagged
-        # return "*" if !revealed
+        return "*" if !revealed
         return "B".colorize(:red) if bomb
-        check_square(position)
+        neighbor_bomb_count(position)
     end
 
-    def check_square(position)
+    def neighbor_bomb_count(position)
         value = 0
         x = (position[0] - 1) >= 0 ? (position[0] - 1) : position[0]
 
@@ -50,8 +50,5 @@ class Tile
 
         value == 0 ? '_' : value.to_s.colorize(:blue)
     end
-
-    # pass board to Tile on initialize so you can find neighbors for
-    # neighbors method and neighbor_bomb_count method
 
 end
