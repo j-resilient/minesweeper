@@ -40,18 +40,22 @@ class Tile
 
     def get_surrounding_tiles(position)
         surrounding_tiles = []
-        x = (position[0] - 1) >= 0 ? (position[0] - 1) : position[0]
+        pos_x, pos_y = position
+        max_x, max_y = (pos_x + 1), (pos_y + 1)
+        current_x = (pos_x - 1) >= 0 ? (pos_x - 1) : pos_x
 
-        while x <= (position[0] + 1)
-            y = (position[1] - 1) >= 0 ? (position[1] - 1) : position[1]    
-            while y <= (position[1] + 1)
-                new_pos = [x, y]
+        while current_x <= max_x
+            current_y = (pos_y - 1) >= 0 ? (pos_y - 1) : pos_y 
+
+            while current_y <= max_y
+                new_pos = [current_x, current_y]
                 surrounding_tiles << new_pos
-                break if (y + 1) > 8
-                y += 1
+                break if (current_y + 1) > @board.length
+                current_y += 1
             end
-            break if (x + 1) > 8
-            x += 1
+
+            break if (current_x + 1) > 8
+            current_x += 1
         end
         surrounding_tiles
     end
