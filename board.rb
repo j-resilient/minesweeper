@@ -9,6 +9,10 @@ class Board
         grid[x][y]
     end
 
+    def length
+        @grid.length
+    end
+
     def get_bomb_positions
         positions = []
         until positions.length == 10
