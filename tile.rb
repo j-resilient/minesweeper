@@ -34,11 +34,11 @@ class Tile
 
     def neighbor_bomb_count(position)
         bomb_count = 0
-        get_surrounding_tiles(position).each { |pos| bomb_count += 1 if @board[pos].bomb }
+        get_neighbors(position).each { |pos| bomb_count += 1 if @board[pos].bomb }
         bomb_count == 0 ? '_' : bomb_count.to_s.colorize(:blue)
     end
 
-    def get_surrounding_tiles(position)
+    def get_neighbors(position)
         surrounding_tiles = []
 
         pos_x, pos_y = position
@@ -53,6 +53,16 @@ class Tile
             end
         end
         surrounding_tiles
+    end
+
+    def reveal_neighbors(position)
+        neighbors = get_neighbors(position)
+        neighbors.delete_if { |n| @board[n].bomb || @board[n].revealed }
+        if !neighbors.empty?
+            neighbors.each { |n| @board[n].reveal }
+            neighbors.delete_if { |n| @board[n].to_s(n) != '_' }
+            neighbors.each { |n| reveal_neighbors(n) }
+        end
     end
 
 end

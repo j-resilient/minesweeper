@@ -49,16 +49,8 @@ class Board
 
     def render
         puts "  #{(0..8).to_a.join(" ")}"
-        # grid.each_with_index do |row, row_idx|
-        #     print "#{row_idx} #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
-        # end
-
         grid.each_with_index do |row, row_idx|
-            print "#{row_idx} "
-            x = row.map.with_index do |tile, col_idx| 
-                tile.to_s([row_idx, col_idx]) 
-            end
-            print "#{x.join(' ')}\n"
+            print "#{row_idx} #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
         end
     end
 
@@ -75,7 +67,11 @@ class Board
             grid[x][y].toggle_flag
         else
             grid[x][y].reveal
-            @lose = true if grid[x][y].bomb
+            if grid[x][y].bomb
+                @lose = true
+            elsif grid[x][y].to_s([x,y]) == '_'
+                grid[x][y].reveal_neighbors([x,y])
+            end
         end
     end
 
