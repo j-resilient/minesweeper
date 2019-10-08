@@ -39,13 +39,15 @@ class Minesweeper
 
     def parse_input(input)
         input.delete_if { |el| el == " " || el == ","}
-        input.map do |el| 
+        input.map! do |el| 
             if el =~ /[[:digit:]]/
                 el.to_i
             else
                 el
             end
         end
+        input[1], input[2] = input[2], input[1]
+        input
     end
 
     def valid_input?(input)
