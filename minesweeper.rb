@@ -15,7 +15,7 @@ class Minesweeper
             current_input = get_input
             board.update(current_input)
         end
-        board.render
+        board.reveal_all
         puts "Game over!"
     end
 

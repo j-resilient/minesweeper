@@ -45,9 +45,24 @@ class Board
 
     def render
         puts "  #{(0..8).to_a.join(" ")}"
+        # grid.each_with_index do |row, row_idx|
+        #     print "#{row_idx} #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
+        # end
+
         grid.each_with_index do |row, row_idx|
-            print "#{row_idx} #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
+            print "#{row_idx} "
+            x = row.map.with_index do |tile, col_idx| 
+                tile.to_s([row_idx, col_idx]) 
+            end
+            print "#{x.join(' ')}\n"
         end
+    end
+
+    def reveal_all
+        @grid.each do |row|
+            row.each { |tile| tile.reveal }
+        end
+        render
     end
 
     def update(input)
