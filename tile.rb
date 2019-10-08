@@ -18,11 +18,11 @@ class Tile
     end
 
     def reveal
-        revealed = true
+        @revealed = true
     end
 
     def toggle_flag
-        flagged = !flagged
+        @flagged = !flagged
     end
 
     def to_s(position)

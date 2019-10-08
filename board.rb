@@ -53,7 +53,12 @@ class Board
         end
     end
 
-    def game_over?
-        
+    def update(input)
+        x, y = input[1], input[2]
+        if input[0] == 'f'
+            grid[x][y].toggle_flag
+        else
+            grid[x][y].reveal
+        end
     end
 end

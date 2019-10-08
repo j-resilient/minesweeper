@@ -1,4 +1,5 @@
 require_relative 'board'
+require 'byebug'
 
 class Minesweeper
     attr_reader :board, :current_input
@@ -11,7 +12,8 @@ class Minesweeper
     def run
         board.render
         current_input = get_input
-        print input
+        board.update(current_input)
+        board.render
     end
 
     def get_input
