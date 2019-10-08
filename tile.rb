@@ -58,11 +58,9 @@ class Tile
     def reveal_neighbors(position)
         neighbors = get_neighbors(position)
         neighbors.delete_if { |n| @board[n].bomb || @board[n].revealed }
-        if !neighbors.empty?
-            neighbors.each { |n| @board[n].reveal }
-            neighbors.delete_if { |n| @board[n].to_s(n) != '_' }
-            neighbors.each { |n| reveal_neighbors(n) }
-        end
+        neighbors.each { |n| @board[n].reveal }
+        neighbors.delete_if { |n| @board[n].to_s(n) != '_' }
+        neighbors.each { |n| reveal_neighbors(n) } if !neighbors.empty?
     end
 
 end
