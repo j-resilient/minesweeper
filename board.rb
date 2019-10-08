@@ -22,14 +22,10 @@ class Board
         positions
     end
 
-    def empty_grid
+    def create_grid
         tiles = Array.new(9) do
             Array.new(9) { Tile.new(self) }
         end
-    end
-
-    def create_grid
-        tiles = empty_grid
         set_bombs(tiles)
     end
 
@@ -50,7 +46,7 @@ class Board
     def render
         puts "  #{(0..8).to_a.join(" ")}"
         grid.each_with_index do |row, row_idx|
-            print "#{row_idx} #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }\n"
+            puts "#{row_idx} #{ row.map.with_index { |tile, col_idx| tile.to_s([row_idx, col_idx]) }.join(' ') }"
         end
     end
 
@@ -66,13 +62,17 @@ class Board
         if input[0] == 'f'
             grid[x][y].toggle_flag
         else
-            grid[x][y].reveal
             if grid[x][y].bomb
                 @lose = true
-            elsif grid[x][y].to_s([x,y]) == '_'
-                grid[x][y].reveal_neighbors([x,y])
+            else
+                reveal_input(x,y)
             end
         end
+    end
+
+    def reveal_input(x, y)
+        grid[x][y].reveal
+        grid[x][y].reveal_neighbors([x,y]) if grid[x][y].to_s([x,y]) == '_'
     end
 
     def lose?

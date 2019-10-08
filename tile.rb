@@ -5,11 +5,6 @@ class Tile
     attr_reader :revealed, :bomb, :flagged
     attr_writer :bomb
 
-    # for debugging
-    # def inspect
-    #     "Position:   Bomb: #{bomb}  Revealed: #{revealed}   Flagged: #{flagged}\n"
-    # end
-
     def initialize(board)
         @revealed = false
         @bomb = false
@@ -52,6 +47,7 @@ class Tile
                 surrounding_tiles << [current_x, current_y]
             end
         end
+        
         surrounding_tiles
     end
 
