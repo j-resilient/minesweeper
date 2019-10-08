@@ -40,10 +40,7 @@ class Board
     def initialize
         @bomb_positions = get_bomb_positions
         @grid = create_grid
-    end
-
-    def run
-        render
+        @lose = false
     end
 
     def render
@@ -59,6 +56,15 @@ class Board
             grid[x][y].toggle_flag
         else
             grid[x][y].reveal
+            @lose = true if grid[x][y].bomb
         end
+    end
+
+    def lose?
+        @lose
+    end
+
+    def win?
+        @grid.flatten.all? { |tile| tile.revealed && !tile.bomb }
     end
 end

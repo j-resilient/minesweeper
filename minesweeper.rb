@@ -10,10 +10,17 @@ class Minesweeper
     end
 
     def run
+        until game_over?
+            board.render
+            current_input = get_input
+            board.update(current_input)
+        end
         board.render
-        current_input = get_input
-        board.update(current_input)
-        board.render
+        puts "Game over!"
+    end
+
+    def game_over?
+        board.win? || board.lose?
     end
 
     def get_input
